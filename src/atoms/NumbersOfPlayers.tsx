@@ -18,7 +18,7 @@ export const NumbersOfPlayers = () => {
             "cursor-pointer w-[64px] md:w-[120px] h-[40px] md:h-[52px]", 
             {
                 "bg-[#304859]": numberOfPayers === 1,
-                'bg-[#BCCED9]': numberOfPayers !== 1
+                'bg-[#BCCED9] hover:bg-[#6395B8]': numberOfPayers !== 1
             },
             "rounded-full items-center flex justify-center ",
             "text-[16px] md:text-[26px] text-[#FCFCFC] font-bold")}
@@ -28,7 +28,7 @@ export const NumbersOfPlayers = () => {
             "cursor-pointer w-[64px] md:w-[120px] h-[40px] md:h-[52px]",
             {
                 "bg-[#304859]": numberOfPayers === 2,
-                'bg-[#BCCED9]': numberOfPayers !== 2
+                'bg-[#BCCED9] hover:bg-[#6395B8]': numberOfPayers !== 2
             },
             "rounded-full items-center flex justify-center ",
             "text-[16px] md:text-[26px] text-[#FCFCFC] font-bold")}
@@ -38,7 +38,7 @@ export const NumbersOfPlayers = () => {
             "cursor-pointer w-[64px] md:w-[120px] h-[40px] md:h-[52px]",
             {
                 "bg-[#304859]": numberOfPayers === 3,
-                'bg-[#BCCED9]': numberOfPayers !== 3
+                'bg-[#BCCED9] hover:bg-[#6395B8]': numberOfPayers !== 3
             },
             "rounded-full items-center flex justify-center ",
             "text-[16px] md:text-[26px] text-[#FCFCFC] font-bold")}
@@ -48,7 +48,7 @@ export const NumbersOfPlayers = () => {
            "cursor-pointer w-[64px] md:w-[120px] h-[40px] md:h-[52px]",
             {
                 "bg-[#304859]": numberOfPayers === 4,
-                'bg-[#BCCED9]': numberOfPayers !== 4
+                'bg-[#BCCED9] hover:bg-[#6395B8]': numberOfPayers !== 4
             },
             "rounded-full items-center flex justify-center ",
             "text-[16px] md:text-[26px] text-[#FCFCFC] font-bold")}

@@ -17,7 +17,7 @@ export const SelectTheme = () => {
             "cursor-pointer w-[134px] md:w-[256px] h-[40px] md:h-[52px]",
             {
               "bg-[#304859]" : active === 'numbers',
-              "bg-[#BCCED9]" : active === 'icons',
+              "bg-[#BCCED9] hover:bg-[#6395B8] " : active === 'icons',
             },
             "rounded-full",
            " items-center flex justify-center",
@@ -27,7 +27,7 @@ export const SelectTheme = () => {
             <div className={clsx( 
               "cursor-pointer w-[134px] md:w-[256px] h-[40px] md:h-[52px]",
               {
-                "bg-[#BCCED9]": active === 'numbers',
+                "bg-[#BCCED9] hover:bg-[#6395B8] ": active === 'numbers',
                 "bg-[#304859]" : active === 'icons'
               },
               "rounded-full",

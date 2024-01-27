@@ -17,7 +17,7 @@ export const GridSize = () => {
             'cursor-pointer w-[134px] md:w-[256px] h-[40px] md:h-[52px]',
             {
              'bg-[#304859]': active === '4x4',
-             'bg-[#BCCED9]': active === '6x6',
+             'bg-[#BCCED9] hover:bg-[#6395B8]': active === '6x6',
             },
             'rounded-full',  
             'items-center flex justify-center',  
@@ -28,7 +28,7 @@ export const GridSize = () => {
             <div className={clsx(
             'cursor-pointer w-[134px] md:w-[256px] h-[40px] md:h-[52px]',
             {
-             'bg-[#BCCED9]': active === '4x4',
+             'bg-[#BCCED9] hover:bg-[#6395B8]': active === '4x4',
              'bg-[#304859]': active === '6x6',
             },
             'rounded-full',  
