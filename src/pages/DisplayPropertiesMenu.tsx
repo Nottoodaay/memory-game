@@ -1,6 +1,6 @@
-import { GridSize } from "../atoms/GridSize"
-import { NumbersOfPlayers } from "../atoms/NumbersOfPlayers"
-import { SelectTheme } from "../atoms/SelectTheme"
+import { GridSize } from "../components/GridSize"
+import { NumbersOfPlayers } from "../components/NumbersOfPlayers"
+import { SelectTheme } from "../components/SelectTheme"
 
 export const DisplayPropertiesMenu = () => {
   
