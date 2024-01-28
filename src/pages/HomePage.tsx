@@ -2,7 +2,7 @@ import { GridSize } from "../components/GridSize"
 import { NumbersOfPlayers } from "../components/NumbersOfPlayers"
 import { SelectTheme } from "../components/SelectTheme"
 
-export const DisplayPropertiesMenu = () => {
+export const HomePage = () => {
   
   return (
     <div className=" flex flex-col items-center gap-[45px]">
