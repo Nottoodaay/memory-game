@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Circle } from "../atoms/Circle";
 import { NumbersObject, numbersArrayFor4x4 } from "../gameLogic/numbersArray";
+import { shuffleArray } from "../gameLogic/helpers";
 
 export const GameField = () => {
 
@@ -8,39 +9,35 @@ export const GameField = () => {
   const [secondNumber, setSecondNumber] = useState<NumbersObject>({id:0, number:0, condition:''})
   const [shuffledNumbers, setShuffledNumbers] = useState<NumbersObject[] | []>([])
 
+//when page loagds this code shuffles numbers 
 useMemo(()=>{
-  const shuffleArray = (array: NumbersObject[]) => {
-      for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-    
   const numbers: NumbersObject[] = numbersArrayFor4x4
   setShuffledNumbers(shuffleArray([...numbers])) 
 }, [])
 
 
-
+// this useMemo hook updates old shuffle array items only when number condition is active
 useMemo(()=>{
-  const newArray = (id: number, itemToAdd: NumbersObject) =>{  
-        setShuffledNumbers((prevShuffledNumbers)=>{
-          const newShuffledNumbers = prevShuffledNumbers.map((item)=> item.id !== id ? item : itemToAdd)
-          return [...newShuffledNumbers]
-        })
-      }
+  const updatedArray = (id: number, itemToAdd: NumbersObject) =>{  
+      setShuffledNumbers((prevShuffledNumbers)=>{
+        const newShuffledNumbers = prevShuffledNumbers.map((item)=> item.id !== id ? item : itemToAdd)
+        return [...newShuffledNumbers]
+    })
+  }
+
   if(firstNumber.condition === 'active'){
-    newArray(firstNumber.id, firstNumber)
+    updatedArray(firstNumber.id, firstNumber)
     setFirstNumber({id:0, number:0, condition:''})
+    
   }if(secondNumber.condition === 'active'){
-     newArray(secondNumber.id, secondNumber)
+     updatedArray(secondNumber.id, secondNumber)
      setSecondNumber({id:0, number:0, condition:''})
   }
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [firstNumber.condition, secondNumber.condition])
 
 
+// this hook checks if x and y number is same if it is their condition become active 
 useMemo(() => {
     const checkNumbers = (x: number, y: number) => {
       if (x === y) {
