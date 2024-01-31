@@ -32,8 +32,10 @@ useMemo(()=>{
       }
   if(firstNumber.condition === 'active'){
     newArray(firstNumber.id, firstNumber)
+    setFirstNumber({id:0, number:0, condition:''})
   }if(secondNumber.condition === 'active'){
      newArray(secondNumber.id, secondNumber)
+     setSecondNumber({id:0, number:0, condition:''})
   }
 }, [firstNumber.condition, secondNumber.condition])
 
