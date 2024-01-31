@@ -29,7 +29,7 @@ export const Circle = (props:
     "cursor-pointer",
     {
       "bg-[#304859]": props.item.condition === 'hidden',
-      'bg-[yellow]': props.item.condition === 'active',
+      'bg-[#BCCED9]': props.item.condition === 'active',
     },
     "rounded-full"
     )}

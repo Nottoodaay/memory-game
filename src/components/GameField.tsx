@@ -37,6 +37,7 @@ useMemo(()=>{
      newArray(secondNumber.id, secondNumber)
      setSecondNumber({id:0, number:0, condition:''})
   }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [firstNumber.condition, secondNumber.condition])
 
 
@@ -46,8 +47,8 @@ useMemo(() => {
         setFirstNumber((prev) => ({ ...prev, condition: 'active' }))
         setSecondNumber((prev) => ({ ...prev, condition: 'active' }))
       } else {
-        setFirstNumber((prev) => ({ ...prev, condition: 'hidden' }))
-        setSecondNumber((prev) => ({ ...prev, condition: 'hidden' }))
+        setFirstNumber({id:0, number:0, condition:''})
+        setSecondNumber({id:0, number:0, condition:''})
       }
     }
 
