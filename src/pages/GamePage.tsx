@@ -1,4 +1,4 @@
-import { CircleBoard } from "../components/CircleBoard"
+import { GameField } from "../components/GameField"
 import { GameHeader } from "../components/GameHeader"
 import { PlayersBoard } from "../components/PlayersBoard"
 
@@ -12,7 +12,7 @@ export const GamePage = () => {
      gap-[80px] md:gap-[116px] lg:[85px]
      items-center">
         <GameHeader/>
-        <CircleBoard/>
+        <GameField/>
         <PlayersBoard/>
     </div>
   )
