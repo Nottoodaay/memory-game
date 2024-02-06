@@ -1,13 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import clsx from "clsx"
 
-export const NumbersOfPlayers = () => {
+export const NumbersOfPlayers = (props:{
+    setPlayersQuantity: (value: number)=> void
+}) => {
     const [numberOfPayers, setNumberOfPlayers] = useState(1) 
 
     const handleClick = (number: number) =>{
         setNumberOfPlayers(number)
     }
+
+    useEffect(()=>{
+        props.setPlayersQuantity(numberOfPayers)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[numberOfPayers])
 
   return (
     <div>

@@ -1,12 +1,15 @@
 import { Players } from "../atoms/Players"
-
-export const PlayersBoard = () => {
+import { playersArray } from "../gameLogic/helpers"
+export const PlayersBoard = (props:{
+  playersQuantity: number
+}) => {
+  const inGamePlayers = playersArray(props.playersQuantity)
+  
   return (
     <div className=" flex gap-[24px]">
-        <Players/>
-        <Players/>
-        <Players/>
-        <Players/>
+        {
+          inGamePlayers.map((player)=> <Players key={`${player.id}p`} playerNumber={player.id}/>)
+        }
     </div>
   )
 }

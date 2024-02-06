@@ -2,7 +2,9 @@ import { GameField } from "../components/GameField"
 import { GameHeader } from "../components/GameHeader"
 import { PlayersBoard } from "../components/PlayersBoard"
 
-export const GamePage = () => {
+export const GamePage = (props:{
+  playersQuantity: number
+}) => {
   return (
     <div 
     className=" 
@@ -13,7 +15,7 @@ export const GamePage = () => {
      items-center">
         <GameHeader/>
         <GameField/>
-        <PlayersBoard/>
+        <PlayersBoard playersQuantity={props.playersQuantity}/>
     </div>
   )
 }
