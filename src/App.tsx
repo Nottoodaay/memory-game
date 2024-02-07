@@ -7,7 +7,6 @@ function App() {
   // todo add grid size 
   const [gamePageSelected, setGamePageSelected] = useState(false)
 
-  console.log(playersQuantity)
   return (
     <div className=" bg-[#152938] w-[100vw] h-[100vh]
      flex items-center justify-center">

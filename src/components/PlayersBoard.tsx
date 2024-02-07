@@ -1,14 +1,17 @@
 import { Players } from "../atoms/Players"
-import { playersArray } from "../gameLogic/helpers"
+import { PlayerObject } from "../gameLogic/playerObject"
+import { SinglePlayerField } from "./SinglePlayerField"
+
 export const PlayersBoard = (props:{
-  playersQuantity: number
+  inGamePlayers: PlayerObject[]
 }) => {
-  const inGamePlayers = playersArray(props.playersQuantity)
   
   return (
     <div className=" flex gap-[24px]">
-        {
-          inGamePlayers.map((player)=> <Players key={`${player.id}p`} playerNumber={player.id}/>)
+        {props.inGamePlayers.length > 1 ?
+          props.inGamePlayers.map((player)=> <Players key={`${player.id}p`} player={player}/>)
+          :
+          props.inGamePlayers.map((player)=> <SinglePlayerField key={`${player.id}`} player={player}/>)
         }
     </div>
   )
