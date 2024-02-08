@@ -5,8 +5,8 @@ import { SelectTheme } from "../components/SelectTheme"
 export const HomePage = (props:{
   setPlayersQuantity: (value: number)=> void
   setGamePageSelected: (value: boolean) => void
+  setGridSize: (value: string) => void
 }) => {
-  
   const handleClick = () =>{
     props.setGamePageSelected(true)
   }
@@ -21,7 +21,7 @@ export const HomePage = (props:{
             <SelectTheme/>
             <NumbersOfPlayers 
               setPlayersQuantity={props.setPlayersQuantity}/>
-            <GridSize/>
+            <GridSize setGridSize={props.setGridSize} />
             <button className=" w-[290px] md:w-[540px] h-[48px] md:h-[70px]
             text-[18px] md:text-[32px] text-[#FCFCFC] font-bold 
             rounded-full bg-[#FDA214] flex items-center justify-center"

@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import { Circle } from "../atoms/Circle";
-import { NumbersObject, numbersArrayFor4x4 } from "../gameLogic/numbersArray";
+import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6, sixBoard } from "../gameLogic/numbersArray";
 import { shuffleArray } from "../gameLogic/helpers";
 import { PlayerObject } from "../gameLogic/playerObject";
+import clsx from "clsx";
 
 export const GameField = (props:{
   inGamePlayers: PlayerObject[],
   setIngamePlayers: (value: PlayerObject[])=> void
+  gridSize: string
 }) => {
 
   const [firstNumber, setFirstNumber] = useState<NumbersObject | null >(null)
@@ -14,7 +16,7 @@ export const GameField = (props:{
 
 //when page loagds this code shuffles numbers 
 useMemo(()=>{
-  const numbers: NumbersObject[] = numbersArrayFor4x4
+  const numbers: NumbersObject[] = props.gridSize === fourBoard ? numbersArrayFor4x4 : numbersArrayFor6x6
   setShuffledNumbers(shuffleArray([...numbers])) 
 }, [])
 
@@ -83,12 +85,17 @@ const handleClick = (chosenNumber: NumbersObject) =>{
 
   return (
     <div 
-    className="
-    grid grid-flow-col grid-cols-4 grid-rows-4
-    gap-[12px] md:gap-[20px]">
+    className={clsx(
+    "grid grid-flow-col",
+    {
+      "grid-cols-4 grid-rows-4" : props.gridSize === fourBoard,
+      "gird-cols-6 grid-rows-6" : props.gridSize === sixBoard
+    },
+    "gap-[12px] md:gap-[20px]")}>
         {shuffledNumbers.map((item)=> 
         <div key={item.id} onClick={()=>handleClick(item)}>
-          <Circle 
+          <Circle
+          gridSize={props.gridSize}
           item={item}
           />
         </div> )}

@@ -6,11 +6,13 @@ import { usePlayersArray } from "../hooks/usePlayersArray"
 
 export const GamePage = (props:{
   playersQuantity: number
+  gridSize: string
 }) => {
   const {inGamePlayers, setPlayersArray, setInGamePlayers} = usePlayersArray()
   
   useEffect(()=>{
     setPlayersArray(props.playersQuantity)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (
@@ -22,7 +24,10 @@ export const GamePage = (props:{
      gap-[80px] md:gap-[116px] lg:gap-[85px]
      items-center">
         <GameHeader/>
-        <GameField inGamePlayers={inGamePlayers} setIngamePlayers={setInGamePlayers} />
+        <GameField
+        gridSize={props.gridSize} 
+        inGamePlayers={inGamePlayers} 
+        setIngamePlayers={setInGamePlayers} />
         <PlayersBoard inGamePlayers={inGamePlayers}/>
     </div>
   )

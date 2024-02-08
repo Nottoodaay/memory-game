@@ -1,11 +1,15 @@
 import clsx from "clsx"
 import { useState } from "react"
+import { fourBoard, sixBoard } from "../gameLogic/numbersArray"
 
-export const GridSize = () => {
-    const [active, setActive] = useState('4x4')
+export const GridSize = (props:{
+  setGridSize: (value: string) => void
+}) => {
+    const [active, setActive] = useState(fourBoard)
 
     const handleClick = (boardSize: string) =>{
         setActive(boardSize)
+        props.setGridSize(boardSize)
     }
 
   return (
@@ -22,7 +26,7 @@ export const GridSize = () => {
             'rounded-full',  
             'items-center flex justify-center',  
             ' text-[16px] md:text-[26px] text-[#FCFCFC] font-bold')}
-            onClick={()=>handleClick('4x4')}
+            onClick={()=>handleClick(fourBoard)}
             >4x4</div>
 
             <div className={clsx(
@@ -34,7 +38,7 @@ export const GridSize = () => {
             'rounded-full',  
             'items-center flex justify-center',  
             'text-[16px] md:text-[26px] text-[#FCFCFC] font-bold')}
-            onClick={()=>handleClick('6x6')}
+            onClick={()=>handleClick(sixBoard)}
             >6x6</div>
         </div>
     </div>
