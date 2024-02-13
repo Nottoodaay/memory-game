@@ -7,3 +7,7 @@ export const shuffleArray = (array: NumbersObject[]) => {
     }
     return array;
 }
+
+
+export const icons = 'icons'
+export const numbers = 'numbers'

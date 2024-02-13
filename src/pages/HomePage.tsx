@@ -6,6 +6,7 @@ export const HomePage = (props:{
   setPlayersQuantity: (value: number)=> void
   setGamePageSelected: (value: boolean) => void
   setGridSize: (value: string) => void
+  setTheme: (value: string) => void
 }) => {
   const handleClick = () =>{
     props.setGamePageSelected(true)
@@ -18,7 +19,7 @@ export const HomePage = (props:{
         ">memory</h1>
         <div className="w-[328px] h-[386px] rounded-lg md:w-[654px] md:h-[560px]
          bg-[#FCFCFC] flex flex-col gap-6 md:gap-8 items-center p-6">
-            <SelectTheme/>
+            <SelectTheme setTheme={props.setTheme}/>
             <NumbersOfPlayers 
               setPlayersQuantity={props.setPlayersQuantity}/>
             <GridSize setGridSize={props.setGridSize} />

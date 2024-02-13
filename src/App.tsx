@@ -2,10 +2,12 @@ import { HomePage } from "./pages/HomePage"
 import { GamePage } from "./pages/GamePage"
 import { useState } from "react"
 import { fourBoard } from "./gameLogic/numbersArray"
+import { numbers } from "./gameLogic/helpers"
 
 function App() {
   const [playersQuantity, setPlayersQuantity] = useState(1)
   const [gridSize, setGridSize] = useState(fourBoard)
+  const [gameTheme, setGameTheme] = useState(numbers)
   const [gamePageSelected, setGamePageSelected] = useState(false)
 
   return (
@@ -15,10 +17,12 @@ function App() {
         gamePageSelected ? 
         <GamePage 
         gridSize={gridSize}
+        gameTheme={gameTheme}
         playersQuantity={playersQuantity}/> 
         :  
         <HomePage 
-        setGamePageSelected={setGamePageSelected} 
+        setGamePageSelected={setGamePageSelected}
+        setTheme={setGameTheme} 
         setGridSize={setGridSize}
         setPlayersQuantity={setPlayersQuantity}/>
       }

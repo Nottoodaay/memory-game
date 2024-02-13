@@ -1,12 +1,16 @@
 
 import clsx from "clsx"
 import { useState } from "react"
+import { icons, numbers } from "../gameLogic/helpers"
 
-export const SelectTheme = () => {
-  const [active, setActive] = useState('numbers')
+export const SelectTheme = (props:{
+  setTheme: (value: string) => void
+}) => {
+  const [active, setActive] = useState(numbers)
 
-    const handleClick = (boardSize: string) =>{
-        setActive(boardSize)
+    const handleClick = (boardType: string) =>{
+        setActive(boardType)
+        props.setTheme(boardType)
     }
   return (
     <div>
@@ -16,24 +20,25 @@ export const SelectTheme = () => {
             <div className={clsx( 
             "cursor-pointer w-[134px] md:w-[256px] h-[40px] md:h-[52px]",
             {
-              "bg-[#304859]" : active === 'numbers',
-              "bg-[#BCCED9] hover:bg-[#6395B8] " : active === 'icons',
+              "bg-[#304859]" : active === numbers,
+              "bg-[#BCCED9] hover:bg-[#6395B8] " : active === icons,
             },
             "rounded-full",
            " items-center flex justify-center",
             "text-[16px] md:text-[26px] text-[#FCFCFC] font-bold")}
-            onClick={()=>handleClick('numbers')}
+            onClick={()=>handleClick(numbers)}
             >Numbers</div>
+            
             <div className={clsx( 
               "cursor-pointer w-[134px] md:w-[256px] h-[40px] md:h-[52px]",
               {
-                "bg-[#BCCED9] hover:bg-[#6395B8] ": active === 'numbers',
-                "bg-[#304859]" : active === 'icons'
+                "bg-[#BCCED9] hover:bg-[#6395B8] ": active === numbers,
+                "bg-[#304859]" : active === icons
               },
               "rounded-full",
               "items-center flex justify-center",
               "text-[16px] md:text-[26px] text-[#FCFCFC] font-bold")}
-              onClick={()=>handleClick('icons')}
+              onClick={()=>handleClick(icons)}
               >Icons</div>
         </div>
     </div>

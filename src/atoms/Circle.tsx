@@ -1,14 +1,17 @@
 import clsx from "clsx"
 import { NumbersObject, fourBoard, sixBoard } from "../gameLogic/numbersArray"
+import { numbers } from "../gameLogic/helpers"
+import { IconObject } from "../gameLogic/iconsArray"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 export const Circle = (props:
   {
-    item: NumbersObject
+    item: IconObject & NumbersObject
     gridSize: string
+    gameTheme: string
   }
   ) => {
-    
   return (
     <div
     className={clsx(
@@ -33,7 +36,9 @@ export const Circle = (props:
           'text-[40px]': props.gridSize === fourBoard,
           'text-[28px]': props.gridSize === sixBoard
         }
-        )}>{props.item.number}</div>
+        )}>{
+          props.gameTheme === numbers ? props.item.number : <FontAwesomeIcon icon={props.item.icon} />
+        }</div>
      </div>
   )
 }

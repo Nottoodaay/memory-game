@@ -1,5 +1,7 @@
 
-export const GameHeader = () => {
+export const GameHeader = (props:{
+  setToggleMenu: (value: boolean) => void
+}) => {
   return (
     <div 
     className="
@@ -17,14 +19,16 @@ export const GameHeader = () => {
         md:text-[40px]
         text-[#152938]"
         >memory</h1>
+        
         <button 
         className=" w-[78px] h-[40px] 
          cursor-pointer
          bg-[#FDA214] text-[16px] 
          fonr-bold text-[#FCFCFC]
          rounded-full
-         flex justify-center items-center">
-          Menu</button>
+         flex justify-center items-center"
+         onClick={()=>props.setToggleMenu(true)}
+         >Menu</button>
     </div>
   )
 }
