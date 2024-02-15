@@ -1,17 +1,16 @@
 import clsx from "clsx"
 import { NumbersObject, fourBoard, sixBoard } from "../gameLogic/numbersArray"
-import { numbers } from "../gameLogic/helpers"
 import { IconObject } from "../gameLogic/iconsArray"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 
 export const Circle = (props:
   {
-    item: IconObject & NumbersObject
+    numberObject?: NumbersObject
+    iconObject?: IconObject
     gridSize: string
-    gameTheme: string
   }
-  ) => {
+  ) => { 
   return (
     <div
     className={clsx(
@@ -22,22 +21,23 @@ export const Circle = (props:
     "cursor-pointer",
     'flex items-center justify-center',
     {
-      "bg-[#304859]": props.item.condition === 'hidden',
-      'bg-[#FDA214]': props.item.condition === 'pending',
-      'bg-[#BCCED9]': props.item.condition === 'active',
+      "bg-[#304859]": props.numberObject?.condition === 'hidden' || props.iconObject?.condition === 'hidden',
+      'bg-[#FDA214]': props.numberObject?.condition === 'pending' || props.iconObject?.condition === 'pending',
+      'bg-[#BCCED9]': props.numberObject?.condition === 'active' || props.iconObject?.condition === 'active ',
     },
     "rounded-full"
     )}>
+      <div>{props.numberObject?.number}</div>
       <div className={clsx(
         "text-[40px] text-[#FCFCFC] font-bold",
         {
-          "hidden": props.item.condition === 'hidden',
-          'text-[#FCFCFC]': props.item.condition === 'active',
+          "hidden": props.numberObject?.condition === 'hidden' || props.iconObject?.condition === 'hidden',
+          'text-[#FCFCFC]': props.numberObject?.condition === 'active' || props.iconObject?.condition === 'active ',
           'text-[40px]': props.gridSize === fourBoard,
           'text-[28px]': props.gridSize === sixBoard
         }
         )}>{
-          props.gameTheme === numbers ? props.item.number : <FontAwesomeIcon icon={props.item.icon} />
+        props.iconObject ? <FontAwesomeIcon icon={props.iconObject?.icon} /> : props.numberObject?.number
         }</div>
      </div>
   )

@@ -1,5 +1,5 @@
 
-interface IconDefinition {
+export interface IconDefinition {
     prefix: IconPrefix;
     iconName: IconName;
     icon: [number, number, number, number, number, string];

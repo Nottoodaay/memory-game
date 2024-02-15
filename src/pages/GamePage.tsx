@@ -4,6 +4,9 @@ import { GameHeader } from "../components/GameHeader"
 import { PlayersBoard } from "../components/PlayersBoard"
 import { usePlayersArray } from "../hooks/usePlayersArray"
 import { MenuBar } from "../components/MenuBar"
+import { Modal } from "../components/Modal"
+import { numbers } from "../gameLogic/helpers"
+import { IconsGameField } from "../components/IconsGameField"
 
 export const GamePage = (props:{
   playersQuantity: number
@@ -12,7 +15,8 @@ export const GamePage = (props:{
 }) => {
   const {inGamePlayers, setPlayersArray, setInGamePlayers} = usePlayersArray()
   const [toggleMenu, setToggleMenu] = useState(false)
-  
+  const [isGameEnd, setIsGameEnd] = useState(false)
+
   useEffect(()=>{
     setPlayersArray(props.playersQuantity)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,14 +31,30 @@ export const GamePage = (props:{
      gap-[80px] md:gap-[116px] lg:gap-[85px]
      items-center">
           <GameHeader setToggleMenu={setToggleMenu}/>
-          <GameField
-          gridSize={props.gridSize}
-          gameTheme={props.gameTheme} 
-          inGamePlayers={inGamePlayers} 
-          setIngamePlayers={setInGamePlayers} />
+          
+          {
+            props.gameTheme === numbers ? 
+            <GameField
+             gridSize={props.gridSize}
+             inGamePlayers={inGamePlayers} 
+             setIngamePlayers={setInGamePlayers} 
+             setIsGameEnd={setIsGameEnd}
+            />
+            :
+            <IconsGameField 
+            gridSize={props.gridSize}
+            inGamePlayers={inGamePlayers}
+            setIngamePlayers={setInGamePlayers}
+            setIsGameEnd={setIsGameEnd}
+            />
+
+          }
+          
           <PlayersBoard inGamePlayers={inGamePlayers}/>
 
           {toggleMenu ? <MenuBar setToggleMenu={setToggleMenu}/> : null }
+
+          {isGameEnd ? <Modal/> : null}
         
     </div>
   )

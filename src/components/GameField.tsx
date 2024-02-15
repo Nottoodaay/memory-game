@@ -1,40 +1,34 @@
 import { useMemo, useState } from "react";
 import { Circle } from "../atoms/Circle";
 import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6, sixBoard } from "../gameLogic/numbersArray";
-import { numbers as gameTypenNumber, shuffleArray } from "../gameLogic/helpers";
+import { shuffleArray } from "../gameLogic/helpers";
 import { PlayerObject } from "../gameLogic/playerObject";
 import clsx from "clsx";
-import { IconObject, iconsArrayFor4x4 } from "../gameLogic/iconsArray";
-
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export const GameField = (props:{
   inGamePlayers: PlayerObject[],
   setIngamePlayers: (value: PlayerObject[])=> void
+  setIsGameEnd: (value: boolean) => void
   gridSize: string
-  gameTheme: string
 }) => {
-  console.log(faHeart)
+  
   const [firstNumber, setFirstNumber] = useState<NumbersObject | null >(null)
-  const [shuffledNumbers, setShuffledNumbers] = useState<NumbersObject[] | IconObject[] | null>(null)
-  const [isGameEnd, setIsGameEnd] = useState(false)
+  const [shuffledNumbers, setShuffledNumbers] = useState<NumbersObject[] | null>(null)
+
 
 //when page loagds this code shuffles numbers 
 useMemo(()=>{
-  const gameTheme = props.gameTheme
-  const numbers: NumbersObject[] | IconObject[] =
-   props.gridSize === fourBoard && gameTheme === gameTypenNumber ? numbersArrayFor4x4 
-   : 
-   props.gridSize === sixBoard && gameTheme === gameTypenNumber ? numbersArrayFor6x6
-   :
-  iconsArrayFor4x4
-
+  const numbers: NumbersObject[] =
+   props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
   setShuffledNumbers(shuffleArray([...numbers])) 
 }, [])
 
 useMemo(() => {
-  const isAllActive = shuffledNumbers?.every((item) => item.condition === 'active');
-  setIsGameEnd(isAllActive || false);
+  setTimeout(()=>{
+    const isAllActive = shuffledNumbers ? shuffledNumbers.every((item) => item.condition === 'active') : false
+    props.setIsGameEnd(isAllActive);
+  },1000)
+  
 }, [shuffledNumbers]);
 
 const playerTurnHandler = () =>{
@@ -95,17 +89,16 @@ const handleClick = (chosenNumber: NumbersObject) =>{
         playerTurnHandler()
         if(props.inGamePlayers.length === 1) correctAnswer()
       },1000)
-      
     }
   }else{
     setFirstNumber(chosenNumber)
     const secondValue = newArray.findIndex((item)=>item.id === chosenNumber.id) 
     newArray[secondValue].condition = 'pending'
 
-    const isAllActive = newArray.every((item)=> item.condition === 'active')
-    if(isAllActive){
-      setIsGameEnd(true)
-    }
+    // const isAllActive = newArray.every((item)=> item.condition === 'active')
+    // if(isAllActive){
+    //   setIsGameEnd(true)
+    // }
   }
 }
   
@@ -121,11 +114,10 @@ const handleClick = (chosenNumber: NumbersObject) =>{
     "gap-[12px] md:gap-[20px]")}>
         {shuffledNumbers?.map((item)=> 
         <div key={item.id} onClick={()=>handleClick(item)}>
-          <Circle
-          gridSize={props.gridSize}
-          gameTheme={props.gameTheme}
-          item={item}
-          />
+            <Circle
+            gridSize={props.gridSize}
+            numberObject={item}
+            />         
         </div> )}
     </div>
   )
