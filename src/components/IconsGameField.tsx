@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { IconObject, iconsArrayFor4x4 } from "../gameLogic/iconsArray"
+import { IconObject, iconsArrayFor4x4, iconsArrayFor6x6 } from "../gameLogic/iconsArray"
 import { shuffleIconsArray } from "../gameLogic/helpers"
 import { PlayerObject } from "../gameLogic/playerObject"
 import clsx from "clsx"
@@ -16,7 +16,7 @@ export const IconsGameField = (props:{
     const [shuffledIcons, setShuffledIcons] = useState<IconObject[] | null>(null)
 
     useMemo(()=>{
-        const icons: IconObject[] = iconsArrayFor4x4
+        const icons: IconObject[] = props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
         setShuffledIcons(shuffleIconsArray([...icons]))
     },[])
 

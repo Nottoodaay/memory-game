@@ -269,7 +269,6 @@ export const numbersArrayFor6x6: NumbersObject[] = [
         number: 19,
         condition: 'hidden'
     },
-    
 ]
 
 export const fourBoard = '4x4'
