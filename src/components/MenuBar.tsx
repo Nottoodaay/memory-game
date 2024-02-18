@@ -1,7 +1,15 @@
 
 export const MenuBar = (props:{
   setToggleMenu: (value: boolean) => void
+  setGamePageSelected: (value: boolean) => void
 }) => {
+  const newGame = () =>{
+   props.setGamePageSelected(false)
+  }
+  const reset = () =>{
+    props.setToggleMenu(false)
+    props.setGamePageSelected(true)
+  }
   return (
     <div
      className=" fixed left-0 z-50 
@@ -15,11 +23,13 @@ export const MenuBar = (props:{
           className=" w-[280px] h-[48px]
            bg-[#FDA214] rounded-full cursor-pointer
            flex items-center justify-center"
+           onClick={reset}
            >Restart</button>
           <button 
           className=" w-[280px] h-[48px] 
            bg-[#DFE7EC] rounded-full cursor-pointer
            flex items-center justify-center"
+           onClick={newGame}
            >New Game</button>
           <button 
           className=" w-[280px] h-[48px]
@@ -28,7 +38,6 @@ export const MenuBar = (props:{
            onClick={()=>props.setToggleMenu(false)}
            >Resume Game</button>
       </div>
-
     </div>
   )
 }

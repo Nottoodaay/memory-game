@@ -18,7 +18,9 @@ function App() {
         <GamePage 
         gridSize={gridSize}
         gameTheme={gameTheme}
-        playersQuantity={playersQuantity}/> 
+        playersQuantity={playersQuantity}
+        setGamePageSelected={setGamePageSelected}
+        /> 
         :  
         <HomePage 
         setGamePageSelected={setGamePageSelected}

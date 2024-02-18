@@ -26,9 +26,25 @@ export const GameHeader = (props:{
          bg-[#FDA214] text-[16px] 
          fonr-bold text-[#FCFCFC]
          rounded-full
-         flex justify-center items-center"
+         flex justify-center items-center md:hidden"
          onClick={()=>props.setToggleMenu(true)}
          >Menu</button>
+
+         <div className="hidden md:flex gap-[40px]">
+            <button 
+            className="
+              w-[128px] h-[52px]
+              bg-[#FDA214] rounded-full
+              text-[20px] text-[#FCFCFC] font-bold
+             flex items-center justify-center">Restart</button>
+             
+             <button 
+            className="
+              w-[150px] h-[52px]
+              bg-[#DFE7EC] rounded-full
+              text-[20px] text-[#304859] font-bold
+             flex items-center justify-center">New Game</button>
+         </div>
     </div>
   )
 }

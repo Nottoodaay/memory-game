@@ -1,11 +1,13 @@
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { PlayerObject } from '../gameLogic/playerObject'
 
 export const SinglePlayerField = (props:{
     player: PlayerObject
+    timer: string
+    setTimer: (value: string) => void
+    isGameEnd: boolean
 }) => {
-  const [timer, setTimer] = useState("")
 
   useMemo(()=>{
     const startTime: number = new Date().getTime()
@@ -20,16 +22,15 @@ export const SinglePlayerField = (props:{
 
 
       const formattedTime: string = `${minutes % 60}:${seconds % 60}`;
-      setTimer(formattedTime)
+      props.setTimer(formattedTime)
     }
 
     const timerInterval = setInterval(updateTimer, 1000)
 
-    setTimeout(() => {
-      clearInterval(timerInterval);
-      console.log("Timer stopped.");
-    }, 2000000);
-  },[])
+    if(props.isGameEnd){
+      clearInterval(timerInterval)
+    }
+  },[props.isGameEnd])
   
 
   return (
@@ -39,7 +40,7 @@ export const SinglePlayerField = (props:{
          flex lg:flex-row lg:gap-[110px] flex-col items-center justify-center'>
           <p className=' text-[#7191A5] font-bold'>Time</p>
           <h2 className=' text-[#304859] 
-          text-[24px] font-bold'>{timer}</h2>
+          text-[24px] font-bold'>{props.timer}</h2>
         </div>
 
         <div className=' w-[150px] h-[70px] lg:w-[250px] lg:h-[72px]

@@ -27,6 +27,7 @@ export const Circle = (props:
     },
     "rounded-full"
     )}>
+      <div>{props.numberObject?.number}</div>
       <div className={clsx(
         "text-[40px] text-[#FCFCFC] font-bold",
         {
