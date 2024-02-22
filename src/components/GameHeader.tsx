@@ -8,6 +8,7 @@ export const GameHeader = (props:{
   setToggleMenu: (value: boolean) => void
   setGamePageSelected: (value: boolean) => void
   setTimer: (value: string) => void
+  setStartTime: (value: string) => void
   setShuffledNumbers: (value: NumbersObject[] | null) => void
   inGamePlayers: PlayerObject[]
   setInGamePlayers: (value: PlayerObject[]) => void
@@ -17,7 +18,8 @@ export const GameHeader = (props:{
    }
    
    const reset = () =>{
-     props.setTimer('')
+     props.setStartTime(String(new Date().getTime()))
+     props.setTimer("00.00")
      props.setToggleMenu(false)
  
      const numbers: NumbersObject[] =

@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { PlayerObject } from '../gameLogic/playerObject'
 
 export const SinglePlayerField = (props:{
@@ -7,35 +7,38 @@ export const SinglePlayerField = (props:{
     timer: string
     setTimer: (value: string) => void
     isGameEnd: boolean
+    setStartTime: (value: string) => void
+    startTime: string
 }) => {
+  const [timerInterval, setTimerInterval] = useState<number | null>(null)
 
   useEffect(() => {
-    let timerInterval: number | null = null;
-    const startTime = new Date().getTime();
-  
-    const updateTimer = () => {
-      const currentTime = new Date().getTime();
-      const timeElapsed = currentTime - startTime;
-      const seconds = Math.floor(timeElapsed / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const formattedTime = `${minutes % 60}:${seconds % 60}`;
-  
-      if (props.isGameEnd) {
-        clearInterval(timerInterval || 0); 
-      } else {
+    if (props.isGameEnd && timerInterval !== null) {
+      clearInterval(timerInterval); 
+      setTimerInterval(null);
+      props.setTimer('');
+    } else {
+      const updateTimer = () => {
+        const currentTime: number = new Date().getTime();
+        const timeElapsed: number = currentTime - Number(props.startTime);
+        const seconds: number = Math.floor(timeElapsed / 1000);
+        const minutes: number = Math.floor(seconds / 60);
+        const formattedTime: string =`${minutes % 60}:${seconds % 60}`;
         props.setTimer(formattedTime);
-      }
-    };
-  
-    updateTimer();
-  
-    timerInterval = setInterval(updateTimer, 1000);
-  
-    return () => {
-      if (timerInterval) {
+      };
+
+
+      if (timerInterval !== null) {
         clearInterval(timerInterval);
       }
-    };
+      props.setStartTime(String(new Date().getTime()));
+      updateTimer();
+
+      const intervalId = setInterval(updateTimer, 1000);
+      setTimerInterval(intervalId);
+
+      return () => clearInterval(intervalId);
+    }
   }, [props.isGameEnd]);
   
 
