@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import { GameField } from "../components/GameField"
 import { GameHeader } from "../components/GameHeader"
 import { PlayersBoard } from "../components/PlayersBoard"
 import { usePlayersArray } from "../hooks/usePlayersArray"
 import { MenuBar } from "../components/MenuBar"
 import { Modal } from "../components/Modal"
-import { numbers } from "../gameLogic/helpers"
+import { icons, numbers, shuffleArray } from "../gameLogic/helpers"
 import { IconsGameField } from "../components/IconsGameField"
+import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6 } from "../gameLogic/numbersArray"
 
 export const GamePage = (props:{
   playersQuantity: number
@@ -18,13 +19,17 @@ export const GamePage = (props:{
   const [toggleMenu, setToggleMenu] = useState(false)
   const [isGameEnd, setIsGameEnd] = useState(false)
 
-  useEffect(()=>{
+  const [timer, setTimer] = useState("")
+  const [shuffledNumbers, setShuffledNumbers] = useState<NumbersObject[] | null>(null)
+
+  useMemo(()=>{
     setPlayersArray(props.playersQuantity)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const numbers: NumbersObject[] =
+     props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+    setShuffledNumbers(shuffleArray([...numbers])) 
   }, [])
 
-  const [timer, setTimer] = useState("")
-  
   return (
     <div 
     className=" 
@@ -33,7 +38,15 @@ export const GamePage = (props:{
      flex flex-col 
      gap-[80px] md:gap-[85px]
      items-center">
-          <GameHeader setToggleMenu={setToggleMenu}/>
+          <GameHeader 
+          gameTheme={props.gameTheme}
+          setTimer={setTimer}
+          gridSize={props.gridSize}
+          setShuffledNumbers={setShuffledNumbers}
+          setToggleMenu={setToggleMenu} 
+          setGamePageSelected={props.setGamePageSelected}
+          inGamePlayers={inGamePlayers}
+          setInGamePlayers={setInGamePlayers}/>
           
           {
             props.gameTheme === numbers ? 
@@ -42,14 +55,19 @@ export const GamePage = (props:{
              inGamePlayers={inGamePlayers} 
              setIngamePlayers={setInGamePlayers} 
              setIsGameEnd={setIsGameEnd}
+             shuffledNumbers={shuffledNumbers}
+             setShuffledNumbers={setShuffledNumbers}
             />
             :
+            props.gameTheme === icons ?
             <IconsGameField 
             gridSize={props.gridSize}
             inGamePlayers={inGamePlayers}
             setIngamePlayers={setInGamePlayers}
             setIsGameEnd={setIsGameEnd}
             />
+            :
+            null
 
           }
           
@@ -61,8 +79,15 @@ export const GamePage = (props:{
 
           {toggleMenu ? 
           <MenuBar 
+          gameTheme={props.gameTheme}
+          setTimer={setTimer}
+          gridSize={props.gridSize}
+          setShuffledNumbers={setShuffledNumbers}
           setToggleMenu={setToggleMenu} 
-          setGamePageSelected={props.setGamePageSelected}/> 
+          setGamePageSelected={props.setGamePageSelected}
+          inGamePlayers={inGamePlayers}
+          setInGamePlayers={setInGamePlayers}
+          /> 
           : null }
 
           {

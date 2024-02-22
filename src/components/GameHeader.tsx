@@ -1,7 +1,44 @@
+import { shuffleArray } from "../gameLogic/helpers"
+import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6 } from "../gameLogic/numbersArray"
+import { PlayerObject } from "../gameLogic/playerObject"
 
 export const GameHeader = (props:{
+  gridSize: string
+  gameTheme: string
   setToggleMenu: (value: boolean) => void
+  setGamePageSelected: (value: boolean) => void
+  setTimer: (value: string) => void
+  setShuffledNumbers: (value: NumbersObject[] | null) => void
+  inGamePlayers: PlayerObject[]
+  setInGamePlayers: (value: PlayerObject[]) => void
 }) => {
+  const newGame = () =>{
+    props.setGamePageSelected(false)
+   }
+   
+   const reset = () =>{
+     props.setTimer('')
+     props.setToggleMenu(false)
+ 
+     const numbers: NumbersObject[] =
+     props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+     const restNumbers = numbers.slice()
+     restNumbers.every((number)=> number.condition = 'hidden')
+     props.setShuffledNumbers(shuffleArray([...restNumbers])) 
+ 
+     const newPlayers = props.inGamePlayers.slice()
+     newPlayers.every((player)=> player.score = 0)
+     
+     if(newPlayers.length > 1){
+       if(newPlayers[0].condition !== 'active'){
+         const activePlayer = newPlayers.findIndex((player)=>player.condition === 'active')
+         newPlayers[activePlayer].condition = 'inactive'
+       }
+     
+       newPlayers[0].condition = 'active'
+     }
+   }
+
   return (
     <div 
     className="
@@ -36,14 +73,18 @@ export const GameHeader = (props:{
               w-[128px] h-[52px]
               bg-[#FDA214] rounded-full
               text-[20px] text-[#FCFCFC] font-bold
-             flex items-center justify-center">Restart</button>
+             flex items-center justify-center"
+             onClick={reset}
+             >Restart</button>
              
              <button 
             className="
               w-[150px] h-[52px]
               bg-[#DFE7EC] rounded-full
               text-[20px] text-[#304859] font-bold
-             flex items-center justify-center">New Game</button>
+             flex items-center justify-center"
+             onClick={newGame}
+             >New Game</button>
          </div>
     </div>
   )
