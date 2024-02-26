@@ -8,6 +8,7 @@ export const MenuBar = (props:{
   setToggleMenu: (value: boolean) => void
   setGamePageSelected: (value: boolean) => void
   setTimer: (value: string) => void
+  setStartTime: (value: string) => void
   setShuffledNumbers: (value: NumbersObject[] | null) => void
   inGamePlayers: PlayerObject[]
   setInGamePlayers: (value: PlayerObject[]) => void
@@ -17,6 +18,7 @@ export const MenuBar = (props:{
   }
   
   const reset = () =>{
+    props.setStartTime(String(new Date().getTime()))
     props.setTimer('')
     props.setToggleMenu(false)
 

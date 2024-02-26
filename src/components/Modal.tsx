@@ -14,7 +14,6 @@ export const Modal = (props:{
     newArray[winnerPlayer.id].condition = 'winner'
   },[])
 
-  console.log(props.time)
   const winner = newArray.filter((player)=>player.condition === 'winner')
   
   return (

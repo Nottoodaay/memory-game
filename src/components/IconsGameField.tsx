@@ -53,6 +53,15 @@ const correctAnswer = () =>{
 const handleClick = (chosenNumber: IconObject) =>{
   //for avoid double click
   if(chosenNumber.condition === 'active' || chosenNumber.condition === 'pending') return
+
+  const pendingCount = props.shuffledNumbers?.filter(
+    (item) => item.condition === 'pending'
+  ).length;
+
+  if (pendingCount) {
+    if(pendingCount >= 2)
+    return;
+  }
   
   const newArray = props.shuffledNumbers ? props.shuffledNumbers.slice() : []
  

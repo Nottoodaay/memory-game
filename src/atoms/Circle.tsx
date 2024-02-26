@@ -23,7 +23,7 @@ export const Circle = (props:
     {
       "bg-[#304859]": props.numberObject?.condition === 'hidden' || props.iconObject?.condition === 'hidden',
       'bg-[#FDA214]': props.numberObject?.condition === 'pending' || props.iconObject?.condition === 'pending',
-      'bg-[#BCCED9]': props.numberObject?.condition === 'active' || props.iconObject?.condition === 'active ',
+      'bg-[#BCCED9]': props.numberObject?.condition === 'active' || props.iconObject?.condition === 'active',
     },
     "rounded-full"
     )}>
@@ -37,7 +37,9 @@ export const Circle = (props:
           'text-[28px]': props.gridSize === sixBoard
         }
         )}>{
-        props.iconObject ? <FontAwesomeIcon icon={props.iconObject?.icon} /> : props.numberObject?.number
+          props.iconObject ? 
+          <FontAwesomeIcon icon={props.iconObject?.icon} />
+           : props.numberObject?.number
         }</div>
      </div>
   )

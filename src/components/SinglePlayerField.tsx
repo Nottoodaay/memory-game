@@ -10,28 +10,32 @@ export const SinglePlayerField = (props:{
     setStartTime: (value: string) => void
     startTime: string
 }) => {
+ 
   const [timerInterval, setTimerInterval] = useState<number | null>(null)
+  
+  useEffect(() => {
+    props.setStartTime(String(new Date().getTime()));
+  }, [props.setStartTime]);
 
   useEffect(() => {
     if (props.isGameEnd && timerInterval !== null) {
-      clearInterval(timerInterval); 
+      clearInterval(timerInterval);
       setTimerInterval(null);
-      props.setTimer('');
+      props.setTimer("");
     } else {
       const updateTimer = () => {
         const currentTime: number = new Date().getTime();
         const timeElapsed: number = currentTime - Number(props.startTime);
         const seconds: number = Math.floor(timeElapsed / 1000);
         const minutes: number = Math.floor(seconds / 60);
-        const formattedTime: string =`${minutes % 60}:${seconds % 60}`;
+        const formattedTime: string =` ${minutes % 60}:${seconds % 60}`;
         props.setTimer(formattedTime);
       };
-
 
       if (timerInterval !== null) {
         clearInterval(timerInterval);
       }
-      props.setStartTime(String(new Date().getTime()));
+
       updateTimer();
 
       const intervalId = setInterval(updateTimer, 1000);
@@ -39,7 +43,7 @@ export const SinglePlayerField = (props:{
 
       return () => clearInterval(intervalId);
     }
-  }, [props.isGameEnd]);
+  }, [props.isGameEnd, props.startTime, props.setTimer]);
   
 
   return (

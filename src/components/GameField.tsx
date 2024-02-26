@@ -52,11 +52,19 @@ const correctAnswer = () =>{
 const handleClick = (chosenNumber: NumbersObject) =>{
   //for avoid double click
   if(chosenNumber.condition === 'active' || chosenNumber.condition === 'pending') return
+ 
+  const pendingCount = props.shuffledNumbers?.filter(
+    (item) => item.condition === 'pending'
+  ).length;
+
+  if (pendingCount) {
+    if(pendingCount >= 2)
+    return;
+  }
   
   const newArray = props.shuffledNumbers ? props.shuffledNumbers.slice() : []
  
   if(firstNumber){
-    
     const firstValue = newArray.findIndex((item)=>item.id === firstNumber.id) 
     newArray[firstValue].condition = 'pending' 
     const secondValue = newArray.findIndex((item)=>item.id === chosenNumber.id) 

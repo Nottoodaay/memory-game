@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { GameField } from "../components/GameField"
 import { GameHeader } from "../components/GameHeader"
 import { PlayersBoard } from "../components/PlayersBoard"
 import { usePlayersArray } from "../hooks/usePlayersArray"
 import { MenuBar } from "../components/MenuBar"
 import { Modal } from "../components/Modal"
-import { icons, numbers, shuffleArray, shuffleIconsArray } from "../gameLogic/helpers"
+import { icons, shuffleArray, shuffleIconsArray } from "../gameLogic/helpers"
 import { IconsGameField } from "../components/IconsGameField"
 import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6 } from "../gameLogic/numbersArray"
 import { IconObject, iconsArrayFor4x4, iconsArrayFor6x6 } from "../gameLogic/iconsArray"
@@ -22,26 +22,28 @@ export const GamePage = (props:{
 
   const [timer, setTimer] = useState("")
   const [startTime, setStartTime] = useState("")
+  const [endTime, setEndTime] = useState('')
 
   const [shuffledNumbers, setShuffledNumbers] = useState<NumbersObject[] | null>(null)
   const [shuffledIcons, setShuffledIcons] = useState<IconObject[] | null>(null)
 
-  console.log(1)
-
   useMemo(()=>{
     setPlayersArray(props.playersQuantity)
 
-    const numbers: NumbersObject[] =
-     props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
-    setShuffledNumbers(shuffleArray(numbers)) 
+    if(props.gameTheme === 'numbers'){
+      const numbers: NumbersObject[] =
+      props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+      setShuffledNumbers(shuffleArray(numbers)) 
+    }else if(props.gameTheme === "icons"){
+       const icons: IconObject[] = props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
+       setShuffledIcons(shuffleIconsArray(icons))
+    }
+    
   }, [])
 
-  useMemo(()=>{
-    setPlayersArray(props.playersQuantity)
-
-    const icons: IconObject[] = props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
-    setShuffledIcons(shuffleIconsArray(icons))
-},[])
+useEffect(()=>{
+  setEndTime(timer)
+},[isGameEnd])
 
   return (
     <div 
@@ -63,7 +65,7 @@ export const GamePage = (props:{
           setInGamePlayers={setInGamePlayers}/>
           
           {
-            props.gameTheme === numbers ? 
+            props.gameTheme === "numbers" ? 
             <GameField
              gridSize={props.gridSize}
              inGamePlayers={inGamePlayers} 
@@ -97,6 +99,7 @@ export const GamePage = (props:{
 
           {toggleMenu ? 
           <MenuBar 
+          setStartTime={setTimer}
           gameTheme={props.gameTheme}
           setTimer={setTimer}
           gridSize={props.gridSize}
@@ -110,7 +113,7 @@ export const GamePage = (props:{
 
           {
             isGameEnd && inGamePlayers.length > 1 ? <Modal inGamePlayers={inGamePlayers}/> : 
-            isGameEnd && inGamePlayers.length === 1 ? <Modal inGamePlayers={inGamePlayers} time={timer} /> 
+            isGameEnd && inGamePlayers.length === 1 ? <Modal inGamePlayers={inGamePlayers} time={endTime} /> 
             : null
           }
         
