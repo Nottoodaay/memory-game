@@ -31,7 +31,7 @@ export const Circle = (props:
         "text-[40px] text-[#FCFCFC] font-bold",
         {
           "hidden": props.numberObject?.condition === 'hidden' || props.iconObject?.condition === 'hidden',
-          'text-[#FCFCFC]': props.numberObject?.condition === 'active' || props.iconObject?.condition === 'active ',
+          'text-[#FCFCFC]': props.numberObject?.condition === 'active' || props.iconObject?.condition === 'active',
           'text-[40px]': props.gridSize === fourBoard,
           'text-[28px]': props.gridSize === sixBoard
         }
