@@ -26,7 +26,7 @@ export const Players = (props:{player: PlayerObject}) => {
         'text-[#DFE7EC]': props.player.condition === 'active'
       },
        "font-bold")}
-       >{`P${props.player.id}`}</p>
+       >{`P${props.player.id + 1}`}</p>
       <h2 className={clsx(
       "text-[24px]" ,
       {

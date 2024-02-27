@@ -129,7 +129,7 @@ export const Modal = (props:{
                 {player.condition === 'winner'? 
                   <>
                     <h3 className=" text-[#FCFCFC] font-bold"
-                    >Player {player.id + 200} winner!</h3>
+                    >Player {player.id} winner!</h3>
                     <h2 className=" text-[#FCFCFC] text-[20px] font-bold"
                     >{player.score} Score</h2>
                   </>
