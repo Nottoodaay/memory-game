@@ -332,7 +332,7 @@ export const iconsArrayFor6x6: IconObject[] =[
     },
     {
         id: 33,
-        number: 17,
+        number: 18,
         condition: 'hidden',
         icon: faRing
     },
