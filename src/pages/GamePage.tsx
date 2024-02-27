@@ -14,7 +14,10 @@ export const GamePage = (props:{
   playersQuantity: number
   gridSize: string
   gameTheme: string
+  setPlayersQuantity: (value: number)=> void
   setGamePageSelected: (value: boolean) => void
+  setGridSize: (value: string) => void
+  setTheme: (value: string) => void
 }) => {
   const {inGamePlayers, setPlayersArray, setInGamePlayers} = usePlayersArray()
   const [toggleMenu, setToggleMenu] = useState(false)
@@ -62,7 +65,12 @@ useEffect(()=>{
           setToggleMenu={setToggleMenu} 
           setGamePageSelected={props.setGamePageSelected}
           inGamePlayers={inGamePlayers}
-          setInGamePlayers={setInGamePlayers}/>
+          setInGamePlayers={setInGamePlayers}
+          setShuffledIcons={setShuffledIcons}
+          setGridSize={props.setGridSize}
+          setPlayersQuantity={props.setPlayersQuantity}
+          setTheme={props.setTheme}
+          />
           
           {
             props.gameTheme === "numbers" ? 
@@ -104,16 +112,48 @@ useEffect(()=>{
           setTimer={setTimer}
           gridSize={props.gridSize}
           setShuffledNumbers={setShuffledNumbers}
+          setShuffledIcons={setShuffledIcons}
           setToggleMenu={setToggleMenu} 
           setGamePageSelected={props.setGamePageSelected}
           inGamePlayers={inGamePlayers}
           setInGamePlayers={setInGamePlayers}
+          setGridSize={props.setGridSize}
+          setPlayersQuantity={props.setPlayersQuantity}
+          setTheme={props.setTheme}
           /> 
           : null }
 
           {
-            isGameEnd && inGamePlayers.length > 1 ? <Modal inGamePlayers={inGamePlayers}/> : 
-            isGameEnd && inGamePlayers.length === 1 ? <Modal inGamePlayers={inGamePlayers} time={endTime} /> 
+            isGameEnd && inGamePlayers.length > 1 ? 
+            <Modal 
+            setGamePageSelected={props.setGamePageSelected} 
+            inGamePlayers={inGamePlayers} 
+            setShuffledIcons={setShuffledIcons}
+            setShuffledNumbers={setShuffledNumbers}
+            setStartTime={setStartTime}
+            setTimer={setTimer}
+            setToggleMenu={setToggleMenu}
+            gridSize={props.gridSize}
+            gameTheme={props.gameTheme}
+            setGridSize={props.setGridSize}
+            setPlayersQuantity={props.setPlayersQuantity}
+            setTheme={props.setTheme}
+            /> : 
+            isGameEnd && inGamePlayers.length === 1 ? 
+              <Modal 
+              setGamePageSelected={props.setGamePageSelected} 
+              inGamePlayers={inGamePlayers} 
+              setShuffledIcons={setShuffledIcons}
+              setShuffledNumbers={setShuffledNumbers}
+              setStartTime={setStartTime}
+              setTimer={setTimer}
+              setToggleMenu={setToggleMenu}
+              gridSize={props.gridSize}
+              gameTheme={props.gameTheme}
+              time={endTime}
+              setGridSize={props.setGridSize}
+              setPlayersQuantity={props.setPlayersQuantity}
+              setTheme={props.setTheme}/> 
             : null
           }
         

@@ -1,10 +1,25 @@
 import { useMemo } from "react"
 import { PlayerObject } from "../gameLogic/playerObject"
 import clsx from "clsx"
+import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6 } from "../gameLogic/numbersArray"
+import { IconObject, iconsArrayFor4x4, iconsArrayFor6x6 } from "../gameLogic/iconsArray"
+import { numbers, shuffleArray, shuffleIconsArray } from "../gameLogic/helpers"
 
 export const Modal = (props:{
   inGamePlayers: PlayerObject[]
   time?: string
+  gridSize: string
+  gameTheme: string
+  setToggleMenu: (value: boolean) => void
+  setGamePageSelected: (value: boolean) => void
+  setTimer: (value: string) => void
+  setStartTime: (value: string) => void
+  setShuffledNumbers: (value: NumbersObject[] | null) => void
+  setShuffledIcons: (value: IconObject[] | null ) => void
+  setPlayersQuantity: (value: number)=> void
+  setGridSize: (value: string) => void
+  setTheme: (value: string) => void
+  
 }) => {
   const newArray = props.inGamePlayers.slice()
   useMemo(()=>{
@@ -15,6 +30,71 @@ export const Modal = (props:{
   },[])
 
   const winner = newArray.filter((player)=>player.condition === 'winner')
+
+  const newGame = () =>{
+    props.setGamePageSelected(false)
+    props.setPlayersQuantity(1)
+    props.setTheme(numbers)
+    props.setGridSize(fourBoard)
+
+    if(props.gameTheme === "numbers"){
+      const numbers: NumbersObject[] =
+       props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+      const restNumbers = numbers.slice()
+      restNumbers.every((number)=> number.condition = 'hidden')
+      props.setShuffledNumbers(shuffleArray(restNumbers)) 
+    }else if(props.gameTheme === 'icons'){
+      const icons: IconObject[] = 
+        props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
+      const resetIcons = icons.slice()
+      resetIcons.every((icon)=>icon.condition = 'hidden')
+      props.setShuffledIcons(shuffleIconsArray(resetIcons))
+    }
+
+    const newPlayers = props.inGamePlayers.slice()
+     newPlayers.every((player)=> player.score = 0)
+
+    if(newPlayers.length > 1){
+      if(newPlayers[0].condition !== 'active'){
+        const activePlayer = newPlayers.findIndex((player)=>player.condition === 'active')
+        newPlayers[activePlayer].condition = 'inactive'
+      }
+    
+      newPlayers[0].condition = 'active'
+    }
+   }
+
+  const reset = () =>{
+    props.setStartTime(String(new Date().getTime()))
+    props.setTimer("00.00")
+    props.setToggleMenu(false)
+
+    if(props.gameTheme === "numbers"){
+     const numbers: NumbersObject[] =
+      props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+     const restNumbers = numbers.slice()
+     restNumbers.every((number)=> number.condition = 'hidden')
+     props.setShuffledNumbers(shuffleArray(restNumbers)) 
+   }else if(props.gameTheme === 'icons'){
+     const icons: IconObject[] = 
+       props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
+     const resetIcons = icons.slice()
+     resetIcons.every((icon)=>icon.condition = 'hidden')
+     props.setShuffledIcons(shuffleIconsArray(resetIcons))
+   }
+
+    const newPlayers = props.inGamePlayers.slice()
+    newPlayers.every((player)=> player.score = 0)
+    
+    if(newPlayers.length > 1){
+      if(newPlayers[0].condition !== 'active'){
+        const activePlayer = newPlayers.findIndex((player)=>player.condition === 'active')
+        newPlayers[activePlayer].condition = 'inactive'
+      }
+    
+      newPlayers[0].condition = 'active'
+    }
+  }
   
   return (
     <div
@@ -38,7 +118,7 @@ export const Modal = (props:{
             { newArray.length > 1 ? 
             newArray.map((player)=> 
             <div 
-            key={player.id}
+            key={player.id + 100}
             className={clsx(
               " w-[290px] md:w-[542px] h-[48px] md:h-[72px]",
               {
@@ -66,7 +146,7 @@ export const Modal = (props:{
               newArray.map((player)=> 
               <>
               <div 
-              key={player.id}
+              key={player.id + 2000}
               className="
               w-[290px] md:w-[542px] h-[48px] md:h-[72px]
               bg-[#DFE7EC] rounded-md 
@@ -80,7 +160,7 @@ export const Modal = (props:{
               </div>
 
               <div 
-              key={player.id}
+              key={player.id + 200}
               className="
               w-[290px] md:w-[542px] h-[48px] md:h-[72px]
               bg-[#DFE7EC] rounded-md 
@@ -101,14 +181,18 @@ export const Modal = (props:{
               w-[264px] h-[52px]
               bg-[#FDA214] rounded-full
               text-[20px] text-[#FCFCFC] font-bold
-             flex items-center justify-center">Restart</button>
+             flex items-center justify-center" 
+             onClick={reset}
+             >Restart</button>
              
              <button 
             className="
               w-[264px] h-[52px]
               bg-[#DFE7EC] rounded-full
               text-[20px] text-[#304859] font-bold
-             flex items-center justify-center">New Game</button>
+             flex items-center justify-center"
+             onClick={newGame}
+             >New Game</button>
           </div>
         </div>
      </div>

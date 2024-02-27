@@ -20,6 +20,9 @@ function App() {
         gameTheme={gameTheme}
         playersQuantity={playersQuantity}
         setGamePageSelected={setGamePageSelected}
+        setGridSize={setGridSize}
+        setPlayersQuantity={setPlayersQuantity}
+        setTheme={setGameTheme}
         /> 
         :  
         <HomePage 

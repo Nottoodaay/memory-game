@@ -28,7 +28,8 @@ export const SinglePlayerField = (props:{
         const timeElapsed: number = currentTime - Number(props.startTime);
         const seconds: number = Math.floor(timeElapsed / 1000);
         const minutes: number = Math.floor(seconds / 60);
-        const formattedTime: string =` ${minutes % 60}:${seconds % 60}`;
+        const formattedTime: string =
+          seconds % 60 < 10 ? `${minutes % 60}:0${seconds % 60}`: `${minutes % 60}:${seconds % 60}`;
         props.setTimer(formattedTime);
       };
 

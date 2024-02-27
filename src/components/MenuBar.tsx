@@ -1,4 +1,5 @@
-import { shuffleArray } from "../gameLogic/helpers"
+import { numbers, shuffleArray, shuffleIconsArray } from "../gameLogic/helpers"
+import { IconObject, iconsArrayFor4x4, iconsArrayFor6x6 } from "../gameLogic/iconsArray"
 import { NumbersObject, fourBoard, numbersArrayFor4x4, numbersArrayFor6x6 } from "../gameLogic/numbersArray"
 import { PlayerObject } from "../gameLogic/playerObject"
 
@@ -10,23 +11,64 @@ export const MenuBar = (props:{
   setTimer: (value: string) => void
   setStartTime: (value: string) => void
   setShuffledNumbers: (value: NumbersObject[] | null) => void
+  setShuffledIcons: (value: IconObject[] | null ) => void
   inGamePlayers: PlayerObject[]
   setInGamePlayers: (value: PlayerObject[]) => void
+  setPlayersQuantity: (value: number)=> void
+  setGridSize: (value: string) => void
+  setTheme: (value: string) => void
 }) => {
   const newGame = () =>{
-   props.setGamePageSelected(false)
-  }
+    props.setGamePageSelected(false)
+    props.setPlayersQuantity(1)
+    props.setTheme(numbers)
+    props.setGridSize(fourBoard)
+
+    if(props.gameTheme === "numbers"){
+      const numbers: NumbersObject[] =
+       props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+      const restNumbers = numbers.slice()
+      restNumbers.every((number)=> number.condition = 'hidden')
+      props.setShuffledNumbers(shuffleArray(restNumbers)) 
+    }else if(props.gameTheme === 'icons'){
+      const icons: IconObject[] = 
+        props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
+      const resetIcons = icons.slice()
+      resetIcons.every((icon)=>icon.condition = 'hidden')
+      props.setShuffledIcons(shuffleIconsArray(resetIcons))
+    }
+
+    const newPlayers = props.inGamePlayers.slice()
+     newPlayers.every((player)=> player.score = 0)
+
+    if(newPlayers.length > 1){
+      if(newPlayers[0].condition !== 'active'){
+        const activePlayer = newPlayers.findIndex((player)=>player.condition === 'active')
+        newPlayers[activePlayer].condition = 'inactive'
+      }
+    
+      newPlayers[0].condition = 'active'
+    }
+   }
   
   const reset = () =>{
     props.setStartTime(String(new Date().getTime()))
-    props.setTimer('')
+    props.setTimer("00.00")
     props.setToggleMenu(false)
 
-    const numbers: NumbersObject[] =
-    props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
-    const restNumbers = numbers.slice()
-    restNumbers.every((number)=> number.condition = 'hidden')
-    props.setShuffledNumbers(shuffleArray([...restNumbers])) 
+    if(props.gameTheme === "numbers"){
+     const numbers: NumbersObject[] =
+      props.gridSize === fourBoard ? numbersArrayFor4x4 :  numbersArrayFor6x6
+     const restNumbers = numbers.slice()
+     restNumbers.every((number)=> number.condition = 'hidden')
+     props.setShuffledNumbers(shuffleArray(restNumbers)) 
+   }else if(props.gameTheme === 'icons'){
+     const icons: IconObject[] = 
+       props.gridSize === fourBoard ? iconsArrayFor4x4 : iconsArrayFor6x6
+     const resetIcons = icons.slice()
+     resetIcons.every((icon)=>icon.condition = 'hidden')
+     props.setShuffledIcons(shuffleIconsArray(resetIcons))
+   }
 
     const newPlayers = props.inGamePlayers.slice()
     newPlayers.every((player)=> player.score = 0)
