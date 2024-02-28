@@ -175,7 +175,7 @@ export const Modal = (props:{
             </>
             )}
           </div>
-          <div className=" flex sm:flex-col md:flex-row gap-[14px]">
+          <div className=" flex flex-col md:flex-row gap-[14px]">
             <button 
             className="
               w-[264px] h-[52px]
